@@ -10,5 +10,5 @@
 ## Flow
 
 1. Create New Form ( Total budget, Date object asking for month (default => current month) )
-2. Create Category Form ( Name, Budget, Date (default => current day ))
+2. Create Category Form ( Name, Budget )
 3. Create Expense Form ( Amount, Description, Date (default => current day) )
