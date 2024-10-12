@@ -18,7 +18,7 @@ const transactions = [
 
 const RecentTransaction = () => {
   return (
-    <div className="grid grid-cols-1 gap-8">
+
       <Card className="w-[405px] mx-auto px-4">
         <CardHeader>
           <CardTitle className="text-2xl font-bold whitespace-nowrap">
@@ -49,7 +49,7 @@ const RecentTransaction = () => {
           </ul>
         </CardContent>
       </Card>
-    </div>
+  
   );
 };
 
