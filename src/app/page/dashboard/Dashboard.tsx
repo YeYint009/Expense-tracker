@@ -5,6 +5,7 @@ import Monthly from "./components/Monthly";
 import NewExpense from './components/NewExpense';
 import ThisMonth from "./components/ThisMonth";
 import TotalExpense from "./components/TotalExpense";
+import RecentTransaction from "../recent_trasaction/RecentTransaction";
 
 const Dashboard = () => {
   return (
@@ -16,6 +17,8 @@ const Dashboard = () => {
         <ThisMonth/>
         <TotalExpense/>
         <Monthly/>
+        <RecentTransaction/>
+        <NewExpense/>
         </div>
       </div>
     </div>

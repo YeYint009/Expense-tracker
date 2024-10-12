@@ -29,32 +29,22 @@ const Monthly = () => {
               <PencilIcon className="w-4 h-4" />
             </Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px]">
+          <DialogContent className="sm:max-w-[425px] bg-white">
             <DialogHeader>
-              <DialogTitle>Edit profile</DialogTitle>
+              <DialogTitle className="text-black font-bold text-2xl">Monthly Income</DialogTitle>
               <DialogDescription>
-                Make changes to your profile here. Click save when you're done.
+                Add Monthly Income
               </DialogDescription>
             </DialogHeader>
             <div className="grid gap-4 py-4">
               <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="name" className="text-right">
+                <Label htmlFor="name" className="text-right font-bold text-black">
                   Name
                 </Label>
                 <Input
-                  id="name"
-                  defaultValue="Pedro Duarte"
-                  className="col-span-3"
-                />
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="username" className="text-right">
-                  Username
-                </Label>
-                <Input
-                  id="username"
-                  defaultValue="@peduarte"
-                  className="col-span-3"
+                  id="Yen"
+                  defaultValue="2000 ¥"
+                  className="col-span-3 w-auto border-black text-black"
                 />
               </div>
             </div>
