@@ -13,7 +13,13 @@ import {
 } from "../ui/dropdown-menu";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 
-const Navbar = () => {
+export type NavProps = {
+  onSearch : (term : string ) => void;
+  searchTerm : string;
+}
+
+const Navbar = ({onSearch ,searchTerm} : NavProps) => {
+  
   return (
     <div className=" h-24">
       <header className=" max-w-full border-b border-black fixed z-50 flex items-center justify-between container bg-slate-400">
@@ -29,8 +35,11 @@ const Navbar = () => {
               type="text"
               placeholder="Search Expanse ..."
               className="text-pink-700 border-black"
+              value={searchTerm}
+              onChange={(e)=> onSearch(e.target.value)}
             />
           </div>
+          
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Avatar className="flex cursor-pointer">
