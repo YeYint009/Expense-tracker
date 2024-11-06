@@ -24,7 +24,7 @@ const MostUsedCate = ({ expenses }: MostUseProps) => {
       .slice(0, 3);
   }, [categoryTotals]);
   return (
-    <Card className="shadow-lg w-[405px] md:w-full mx-auto px-4 h-48">
+    <Card className="shadow-lg w-full mx-auto px-4 h-48">
       <CardHeader className="flex items-center justify-between space-y-0 pb-2 whitespace-nowrap">
         <CardTitle className=" fond-bold text-xl">
           Most Used Categories

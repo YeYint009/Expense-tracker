@@ -57,22 +57,22 @@ const Dashboard = () => {
     <div className="bg-gray-200 min-h-screen">
       <Navbar />
       <div className="max-w-7xl mx-auto px-2 bg-gray-200">
-        <div className=" grid grid-cols-4 md:grid-cols-2 gap-3 ">
+        <div className=" grid lg:grid-cols-4 md:grid-cols-2 gap-3 ">
           <LastMonth expenses={expenses} />
           <ThisMonth expenses={expenses} />
           <TotalExpense expenses={expenses} />
           <Monthly />
-          <div className="grid grid-cols-subgrid gap-4 col-span-2">
-            <div className="w-full col-start-1 col-end-7">
+          <div className="grid grid-col-2 gap-4 col-span-2">
+            <div className="grid w-full">
               <RecentTransaction expenses={expenses} onDelete={handleDelete} />
             </div>
-            <div className="w-full col-span-2">
-              <NewExpense onAddExpense={addExpense} />
-              <div className="mt-2">
-                <MostUsedCate expenses={expenses} />
-              </div>
-            </div>
           </div>
+              <div className=" grid col-span-2">
+                <div className="grid w-full gap-2">
+                    <NewExpense onAddExpense={addExpense} />
+                    <MostUsedCate expenses={expenses} />
+                </div>
+              </div>
         </div>
       </div>
     </div>

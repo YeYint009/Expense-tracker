@@ -54,7 +54,7 @@ const NewExpense = ({ onAddExpense }: NewExpenseProps) => {
 }
   return (
     <div className="">
-      <Card className="w-[405px] md:w-full mx-auto px-4 ">
+      <Card className="md:w-full mx-auto px-4 ">
         <CardHeader>
           <CardTitle className="text-xl font-bold">Add New Expense</CardTitle>
         </CardHeader>
