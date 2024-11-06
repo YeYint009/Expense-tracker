@@ -17,7 +17,7 @@ import { Input } from "@/components/ui/input";
 
 const Monthly = () => {
   const [openDialog, setOpenDialog] = useState(false);
-  const [monthlyIncome, setMonthlyIncome] = useState("");
+  const [monthlyIncome, setMonthlyIncome] = useState(0);
 
   const handleSaveChanges = () => {
     setOpenDialog(false);
@@ -41,27 +41,37 @@ const Monthly = () => {
               </DialogTitle>
               <DialogDescription>Add Monthly Income</DialogDescription>
             </DialogHeader>
-            <div className="grid gap-4 py-4">
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label
-                  htmlFor="name"
-                  className="text-right font-bold text-black"
-                >
-                  Name
-                </Label>
-                <Input
-                  id="Yen"
-                  defaultValue={monthlyIncome}
-                  className="col-span-3 w-auto border-black text-black"
-                  onChange={(e) => setMonthlyIncome(e.target.value)}
-                />
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleSaveChanges();
+              }}
+            >
+              <div className="grid gap-4 py-4">
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label
+                    htmlFor="name"
+                    className="text-right font-bold text-black"
+                  >
+                    Name
+                  </Label>
+                  <Input
+                    id="income"
+                    type="number"
+                    defaultValue={monthlyIncome}
+                    className="col-span-3 w-auto border-black text-black"
+                    onChange={(e) => setMonthlyIncome(Number(e.target.value))}
+                    min="0"
+                    required
+                  />
+                </div>
               </div>
-            </div>
-            <DialogFooter>
-              <Button type="submit" onClick={handleSaveChanges}>
-                Save changes
-              </Button>
-            </DialogFooter>
+              <DialogFooter>
+                <Button type="submit" onClick={handleSaveChanges}>
+                  Save changes
+                </Button>
+              </DialogFooter>
+            </form>
           </DialogContent>
         </Dialog>
       </CardHeader>

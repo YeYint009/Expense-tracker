@@ -11,14 +11,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 
-export type NavProps = {
-  onSearch : (term : string ) => void;
-  searchTerm : string;
-}
 
-const Navbar = ({onSearch ,searchTerm} : NavProps) => {
+
+const Navbar = () => {
   
   return (
     <div className=" h-24">
@@ -29,16 +25,6 @@ const Navbar = ({onSearch ,searchTerm} : NavProps) => {
           </Link>
         </div>
         <div className="flex gap-4">
-          <div className="relative">
-            <MagnifyingGlassIcon className="absolute h-5 w-5 right-4 bottom-1/3 cursor-pointer"/>
-            <Input
-              type="text"
-              placeholder="Search Expanse ..."
-              className="text-pink-700 border-black"
-              value={searchTerm}
-              onChange={(e)=> onSearch(e.target.value)}
-            />
-          </div>
           
           <DropdownMenu>
             <DropdownMenuTrigger asChild>

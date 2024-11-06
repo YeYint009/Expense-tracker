@@ -15,7 +15,7 @@ const LastMonth = ({ expenses }: LastMonthProps) => {
     currentDate.getMonth() - 1
   );
 
-  const lastMonthExpenses = expenses?.filter(expense => {
+  const lastMonthExpenses = expenses.filter(expense => {
     const expenseDate = new Date(expense.date);
     return (
       expenseDate.getMonth() === lastMonth.getMonth() &&
@@ -23,8 +23,8 @@ const LastMonth = ({ expenses }: LastMonthProps) => {
     );
   });
 
-  const totalLastMonth = lastMonthExpenses?.reduce(
-    (sum, expense) => sum + expense?.amount,
+  const totalLastMonth = lastMonthExpenses.reduce(
+    (sum, expense) => sum + expense.amount,
     0
   );
   return (

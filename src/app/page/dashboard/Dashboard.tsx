@@ -1,6 +1,6 @@
 "use client";
 import Navbar from "@/components/navBar/Navbar";
-import React, { useCallback, useState,useEffect } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import LastMonth from "./components/LastMonth";
 import Monthly from "./components/Monthly";
 import NewExpense from "./components/NewExpense";
@@ -29,60 +29,9 @@ export type NewExpenseType = {
   category: Category;
 };
 
-export const initialData: Expense[] = [
-  {
-    id: 1,
-    description: "Groceries",
-    amount: 50.75,
-    date: "2023-06-01",
-    category: "Food",
-  },
-  {
-    id: 2,
-    description: "Gas",
-    amount: 30.0,
-    date: "2023-06-02",
-    category: "Transportation",
-  },
-  {
-    id: 3,
-    description: "Restaurant",
-    amount: 45.5,
-    date: "2023-06-03",
-    category: "Food",
-  },
-  {
-    id: 4,
-    description: "Internet Bill",
-    amount: 60.0,
-    date: "2023-06-04",
-    category: "Utilities",
-  },
-  {
-    id: 5,
-    description: "Movie Tickets",
-    amount: 25.0,
-    date: "2023-06-05",
-    category: "Entertainment",
-  },
-];
-
 const Dashboard = () => {
   const [expenses, setExpenses] = useState<Expense[]>([]);
 
-  const [monthlyIncome, setMonthlyIncome] = useState(0);
-  const [searchTerm, setSearchTerm] = useState("");
-
-  const filterExpense = expenses.filter((expense) =>
-    expense.description.toLocaleLowerCase().includes(searchTerm)
-  );
-  const handleSearch = useCallback((term: string) => {
-    setSearchTerm(term);
-  }, []);
-
-  useEffect(()=>{
-    setExpenses(initialData)
-  },[expenses])
   const addExpense = useCallback(
     (newExpense: NewExpenseType) => {
       const expense: Expense = {
@@ -98,25 +47,29 @@ const Dashboard = () => {
     [expenses]
   );
 
-  const updateMonthlyIncome = useCallback((newIncome: number) => {
-    setMonthlyIncome(newIncome);
+  const handleDelete = useCallback((id: number) => {
+    setExpenses((prevExpenses) =>
+      prevExpenses.filter((expense) => expense.id !== id)
+    );
   }, []);
 
   return (
     <div className="bg-gray-200 min-h-screen">
-      <Navbar onSearch={handleSearch} searchTerm={searchTerm}/>
+      <Navbar />
       <div className="max-w-7xl mx-auto px-2 bg-gray-200">
-        <div className=" grid grid-cols-1 md:grid-cols-4 gap-3 ">
-          <LastMonth expenses={expenses}/>
-          <ThisMonth />
-          <TotalExpense expenses={expenses}/>
+        <div className=" grid grid-cols-4 md:grid-cols-2 gap-3 ">
+          <LastMonth expenses={expenses} />
+          <ThisMonth expenses={expenses} />
+          <TotalExpense expenses={expenses} />
           <Monthly />
-          <RecentTransaction />
-          <div className="grid grid-cols-subgrid col-span-3 ">
-            <div className="col-start-2">
-              <NewExpense />
+          <div className="grid grid-cols-subgrid gap-4 col-span-2">
+            <div className="w-full col-start-1 col-end-7">
+              <RecentTransaction expenses={expenses} onDelete={handleDelete} />
+            </div>
+            <div className="w-full col-span-2">
+              <NewExpense onAddExpense={addExpense} />
               <div className="mt-2">
-                <MostUsedCate />
+                <MostUsedCate expenses={expenses} />
               </div>
             </div>
           </div>

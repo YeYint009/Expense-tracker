@@ -6,50 +6,65 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { CreditCard } from "lucide-react";
-import React from "react";
+import { CreditCard, Edit2, Trash2 } from "lucide-react";
+import React, { useCallback } from "react";
+import { Expense } from "../dashboard/Dashboard";
+import { Button } from "@/components/ui/button";
 
-const transactions = [
-  { id: 1, title: "House Rent", category: "Utilities", amount: "¥1200" },
-  { id: 2, title: "Electricity Bill", category: "Utilities", amount: "¥150" },
-  { id: 3, title: "Groceries", category: "Shopping", amount: "¥250" },
-  { id: 4, title: "Gym Membership", category: "Fitness", amount: "¥50" },
-];
+type RecentTrancProps = {
+  expenses: Expense[];
+  onDelete: (id: number) => void;
+};
 
-const RecentTransaction = () => {
+const RecentTransaction = ({ expenses,onDelete}: RecentTrancProps) => {
+
+  const handleDelete = useCallback((id : number) => {
+    onDelete(id);
+  },[onDelete])
   return (
-
-      <Card className="w-[405px] mx-auto px-4">
-        <CardHeader>
-          <CardTitle className="text-2xl font-bold whitespace-nowrap">
-            Recent Transactions
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <ul className="space-y-4">
-            {transactions.map((transaction) => (
+    <Card className=" px-4">
+      <CardHeader>
+        <CardTitle className="text-2xl font-bold whitespace-nowrap">
+          Recent Transactions
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <ul className="space-y-4">
+          {expenses
+            .slice(-5)
+            .reverse()
+            .map((expense) => (
               <li
-                key={transaction.id}
+                key={expense.id}
                 className="flex items-center justify-between bg-white p-4 rounded-lg shadow"
               >
                 <div className="flex items-center">
                   <CreditCard className="h-6 w-6 text-blue-500 mr-3" />
                   <div>
                     <span className="block text-lg font-semibold">
-                      {transaction.title}
+                      {expense.description}
                     </span>
                     <span className="text-sm text-gray-500">
-                      {transaction.category}
+                      {expense.category}
                     </span>
                   </div>
                 </div>
-                <span className="text-lg font-semibold">{transaction.amount}</span>
+                <span className="text-lg font-semibold">
+                  {expense.amount} ¥
+                </span>
+                <span className="text-gray-500 text-sm ml-2">
+                  {expense.date}
+                </span>
+                <div className="cursor-pointer">
+                  <Button variant="ghost" onClick={() => handleDelete(expense.id)}>
+                    <Trash2 className="h-5 w-5 text-red-500 " />
+                  </Button>
+                </div>
               </li>
             ))}
-          </ul>
-        </CardContent>
-      </Card>
-  
+        </ul>
+      </CardContent>
+    </Card>
   );
 };
 

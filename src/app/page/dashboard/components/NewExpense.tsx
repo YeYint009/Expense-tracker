@@ -16,38 +16,99 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import React from "react";
+import React, { useState } from "react";
+import { Category, Expense, NewExpenseType } from "../Dashboard";
 
-const NewExpense = () => {
+type NewExpenseProps = {
+  onAddExpense: (expense: NewExpenseType) => void;
+};
+
+const Categories: Category[] = [
+  "Food",
+  "Entertainment",
+  "Transportation",
+  "Utilities",
+  "Other",
+];
+
+const NewExpense = ({ onAddExpense }: NewExpenseProps) => {
+  const [addNewExpense, setAddNewExpense] = useState<NewExpenseType>({
+    description: "",
+    amount: 0,
+    category: "Other",
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault;
+    if(addNewExpense.amount>0){
+      onAddExpense(addNewExpense);
+      setAddNewExpense({
+        description: "",
+        amount: 0,
+        category: "Other",
+    })
+    
+  }else{
+    alert("Amount mustn't 0")
+  };
+}
   return (
     <div className="">
-      <Card className="w-[405px] mx-auto px-4 ">
+      <Card className="w-[405px] md:w-full mx-auto px-4 ">
         <CardHeader>
           <CardTitle className="text-xl font-bold">Add New Expense</CardTitle>
         </CardHeader>
         <CardContent>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="grid w-full items-center gap-4">
               <div className="flex flex-col space-y-1.5">
-                <Input id="description" placeholder="Name of your usage" />
+                <Input
+                  id="description"
+                  placeholder="Name of your usage"
+                  value={addNewExpense.description}
+                  onChange={(e) => {
+                    setAddNewExpense((prev) => ({
+                      ...prev,
+                      description: e.target.value,
+                    }));
+                  }}
+                />
               </div>
               <div className="flex flex-col space-y-1.5">
-                <Input id="amount" placeholder="Add Amount" />
+                <Input
+                  id="amount"
+                  type="number"
+                  placeholder="Add Amount"
+                  value={addNewExpense.amount || ""}
+                  onChange={(e) =>
+                    setAddNewExpense((prev) => ({
+                      ...prev,
+                      amount: Number(e.target.value),
+                    }))
+                  }
+                />
               </div>
 
               <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="other">Other</Label>
-                <Select>
-                  <SelectTrigger id="other">
+                <Label htmlFor="category">Other</Label>
+                <Select
+                  value={addNewExpense.category}
+                  onValueChange={(value) =>
+                    setAddNewExpense((prev) => ({
+                      ...prev,
+                      category: value as Category,
+                    }))
+                  }
+                >
+                  <SelectTrigger id="category">
                     <SelectValue placeholder="Select" />
                   </SelectTrigger>
                   <SelectContent position="popper">
-                    <SelectItem value="food">Food</SelectItem>
-                    <SelectItem value="transportation">
-                      Transportation
-                    </SelectItem>
-                    <SelectItem value="entertainment">Entertainment</SelectItem>
-                    <SelectItem value="utilities">Utilities</SelectItem>
+                    {Categories.map((category) => (
+                      <SelectItem key={category} value={category}>
+                        {category}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>
@@ -55,7 +116,9 @@ const NewExpense = () => {
           </form>
         </CardContent>
         <CardFooter>
-          <Button className="w-full ">Add Expense</Button>
+          <Button className="w-full " type="submit" onClick={handleSubmit}>
+            Add Expense
+          </Button>
         </CardFooter>
       </Card>
     </div>
