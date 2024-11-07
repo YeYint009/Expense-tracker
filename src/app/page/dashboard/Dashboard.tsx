@@ -36,13 +36,11 @@ const Dashboard = () => {
   useEffect(() => {
     if (!initialized.current) {
       const storeExpense = localStorage.getItem("expenses");
-      console.log("get from localStorage : ", storeExpense);
       if (storeExpense) {
         try {
           const parsedExpense = JSON.parse(storeExpense);
           setExpenses(parsedExpense);
         } catch (error) {
-          console.error("parsing data error", error);
           localStorage.removeItem("expenses");
         }
       }
@@ -52,7 +50,6 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (initialized.current) {
-      console.log("Save data:", JSON.stringify(expenses));
       localStorage.setItem("expenses", JSON.stringify(expenses));
     }
   }, [expenses]);

@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PencilIcon } from "@heroicons/react/24/solid";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -18,10 +18,24 @@ import { Input } from "@/components/ui/input";
 const Monthly = () => {
   const [openDialog, setOpenDialog] = useState(false);
   const [monthlyIncome, setMonthlyIncome] = useState(0);
-
-  const handleSaveChanges = () => {
-    setOpenDialog(false);
-  };
+  const initialRef = useRef(false);
+  
+  useEffect(() => {
+    if (!initialRef.current) {
+      const savedIncome = localStorage.getItem("monthlyIncome");
+      if (savedIncome !== null) {
+        setMonthlyIncome(Number(savedIncome));
+      }
+      initialRef.current = true;
+    }
+  }, []);
+  
+    const handleSaveChanges = () => {
+      
+      localStorage.setItem("monthlyIncome", monthlyIncome.toString());
+      setOpenDialog(false);
+    };
+  
   return (
     <Card className="shadow-lg ">
       <CardHeader className="flex flex-row items-center justify-between -space-y-3 pb-2">
