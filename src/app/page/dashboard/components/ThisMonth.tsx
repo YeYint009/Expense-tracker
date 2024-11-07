@@ -20,7 +20,7 @@ const ThisMonth = ({ expenses }: thisMonthProps) => {
         <ArrowTrendingUpIcon className="h-6 w-6" />
       </CardHeader>
       <CardContent className="flex items-center">
-        <div>{thisMonthSum.toFixed(2)} ¥</div>
+        <div>{thisMonthSum} ¥</div>
       </CardContent>
     </Card>
   );

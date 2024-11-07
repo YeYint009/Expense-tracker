@@ -34,7 +34,7 @@ const LastMonth = ({ expenses }: LastMonthProps) => {
         <ArrowTrendingDownIcon className="h-6 w-6" />
       </CardHeader>
       <CardContent className="flex items-center">
-        <div>{totalLastMonth?.toFixed(2)}¥</div>
+        <div>{totalLastMonth} ¥</div>
       </CardContent>
     </Card>
   );

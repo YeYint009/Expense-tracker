@@ -1,6 +1,6 @@
 "use client";
 import Navbar from "@/components/navBar/Navbar";
-import React, { useCallback, useState, useEffect } from "react";
+import React, { useCallback, useState, useEffect, useRef } from "react";
 import LastMonth from "./components/LastMonth";
 import Monthly from "./components/Monthly";
 import NewExpense from "./components/NewExpense";
@@ -31,21 +31,43 @@ export type NewExpenseType = {
 
 const Dashboard = () => {
   const [expenses, setExpenses] = useState<Expense[]>([]);
+  const initialized = useRef(false);
 
-  const addExpense = useCallback(
-    (newExpense: NewExpenseType) => {
-      const expense: Expense = {
-        id: expenses.length + 1,
-        description: newExpense.description,
-        amount: newExpense.amount,
-        category: newExpense.category,
+  useEffect(() => {
+    if (!initialized.current) {
+      const storeExpense = localStorage.getItem("expenses");
+      console.log("get from localStorage : ", storeExpense);
+      if (storeExpense) {
+        try {
+          const parsedExpense = JSON.parse(storeExpense);
+          setExpenses(parsedExpense);
+        } catch (error) {
+          console.error("parsing data error", error);
+          localStorage.removeItem("expenses");
+        }
+      }
+      initialized.current = true;
+    }
+  }, []);
 
-        date: new Date().toISOString().split("T")[0],
-      };
-      setExpenses((prevExpense) => [...prevExpense, expense]);
-    },
-    [expenses]
-  );
+  useEffect(() => {
+    if (initialized.current) {
+      console.log("Save data:", JSON.stringify(expenses));
+      localStorage.setItem("expenses", JSON.stringify(expenses));
+    }
+  }, [expenses]);
+
+  const addExpense = useCallback((newExpense: NewExpenseType) => {
+    const expense: Expense = {
+      id: Date.now(),
+      description: newExpense.description,
+      amount: newExpense.amount,
+      category: newExpense.category,
+
+      date: new Date().toISOString().split("T")[0],
+    };
+    setExpenses((prevExpense) => [...prevExpense, expense]);
+  }, []);
 
   const handleDelete = useCallback((id: number) => {
     setExpenses((prevExpenses) =>
@@ -67,12 +89,12 @@ const Dashboard = () => {
               <RecentTransaction expenses={expenses} onDelete={handleDelete} />
             </div>
           </div>
-              <div className=" grid col-span-2">
-                <div className="grid w-full gap-2">
-                    <NewExpense onAddExpense={addExpense} />
-                    <MostUsedCate expenses={expenses} />
-                </div>
-              </div>
+          <div className=" grid col-span-2">
+            <div className="grid w-full gap-2">
+              <NewExpense onAddExpense={addExpense} />
+              <MostUsedCate expenses={expenses} />
+            </div>
+          </div>
         </div>
       </div>
     </div>

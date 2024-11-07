@@ -21,7 +21,7 @@ const TotalExpense = ({ expenses }: totalExpenseProps) => {
         <CurrencyDollarIcon className="h-6 w-6" />
       </CardHeader>
       <CardContent className="flex items-center">
-        <div>{totalSumExpense.toFixed(2)} ¥</div>
+        <div>{totalSumExpense} ¥</div>
       </CardContent>
     </Card>
   );
